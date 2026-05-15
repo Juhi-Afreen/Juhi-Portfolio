@@ -191,6 +191,35 @@ const SKILLS = {
 
 // --- Components ---
 
+const variantsMap = {
+  up: { y: 40 },
+  down: { y: -40 },
+  left: { x: -40 },
+  right: { x: 40 },
+  fade: {},
+  scale: { scale: 0.9 },
+};
+
+interface RevealProps {
+  children: React.ReactNode;
+  direction?: 'up' | 'down' | 'left' | 'right' | 'fade' | 'scale';
+  delay?: number;
+  duration?: number;
+  className?: string;
+}
+
+const Reveal = ({ children, direction = 'up', delay = 0, duration = 0.6, className = '' }: RevealProps) => (
+  <motion.div
+    initial={{ opacity: 0, ...variantsMap[direction] }}
+    whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+    viewport={{ once: true, margin: '-50px' }}
+    transition={{ duration, delay, ease: 'easeOut' }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -351,7 +380,7 @@ const About = () => (
   <section id="about" className="section-padding bg-zinc-900/30">
     <div className="max-w-7xl mx-auto">
       <div className="grid lg:grid-cols-2 gap-16 items-center">
-        <div className="reveal">
+        <Reveal direction="left">
           <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">About Me</h2>
           <h3 className="text-4xl md:text-5xl font-display font-bold mb-8 leading-tight">
             Designing for humans, <br />
@@ -370,8 +399,9 @@ const About = () => (
               visually stunning and functionally superior.
             </p>
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
+        </Reveal>
+        <Reveal direction="right" delay={0.2}>
+          <div className="grid grid-cols-2 gap-4">
           <motion.div 
             whileHover={{ y: -8 }}
             className="p-8 rounded-3xl glass border border-white/5 flex flex-col justify-between aspect-square transition-all cursor-default group hover:border-indigo-500/50 hover:shadow-[0_0_40px_-15px_rgba(99,102,241,0.4)]"
@@ -413,6 +443,7 @@ const About = () => (
             </div>
           </motion.div>
         </div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -421,62 +452,70 @@ const About = () => (
 const Skills = () => (
   <section id="skills" className="section-padding">
     <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-20">
-        <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Expertise</h2>
-        <h3 className="text-4xl md:text-5xl font-display font-bold">My Creative Arsenal</h3>
-      </div>
+      <Reveal direction="fade">
+        <div className="text-center mb-20">
+          <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Expertise</h2>
+          <h3 className="text-4xl md:text-5xl font-display font-bold">My Creative Arsenal</h3>
+        </div>
+      </Reveal>
 
       <div className="grid md:grid-cols-3 gap-8">
-        <motion.div 
-          whileHover={{ y: -10 }}
-          className="p-10 rounded-[2rem] glass border border-white/5 hover:border-indigo-500/50 hover:shadow-[0_0_50px_-15px_rgba(99,102,241,0.3)] transition-all group"
-        >
-          <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
-            <Layers className="text-indigo-400 group-hover:text-indigo-300 transition-colors" size={32} />
-          </div>
-          <h4 className="text-2xl font-bold mb-6 group-hover:text-indigo-100 transition-colors">UI/UX Design</h4>
-          <ul className="space-y-4">
-            {SKILLS.design.map(skill => (
-              <li key={skill} className="flex items-center gap-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
-                <CheckCircle2 size={18} className="text-indigo-500" /> {skill}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+        <Reveal direction="up" delay={0}>
+          <motion.div 
+            whileHover={{ y: -10 }}
+            className="p-10 rounded-[2rem] glass border border-white/5 hover:border-indigo-500/50 hover:shadow-[0_0_50px_-15px_rgba(99,102,241,0.3)] transition-all group"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+              <Layers className="text-indigo-400 group-hover:text-indigo-300 transition-colors" size={32} />
+            </div>
+            <h4 className="text-2xl font-bold mb-6 group-hover:text-indigo-100 transition-colors">UI/UX Design</h4>
+            <ul className="space-y-4">
+              {SKILLS.design.map(skill => (
+                <li key={skill} className="flex items-center gap-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                  <CheckCircle2 size={18} className="text-indigo-500" /> {skill}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </Reveal>
 
-        <motion.div 
-          whileHover={{ y: -10 }}
-          className="p-10 rounded-[2rem] glass border border-white/5 hover:border-purple-500/50 hover:shadow-[0_0_50px_-15px_rgba(168,85,247,0.3)] transition-all group"
-        >
-          <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
-            <Code className="text-purple-400 group-hover:text-purple-300 transition-colors" size={32} />
-          </div>
-          <h4 className="text-2xl font-bold mb-6 group-hover:text-purple-100 transition-colors">Tools & Tech</h4>
-          <ul className="space-y-4">
-            {SKILLS.tools.map(skill => (
-              <li key={skill} className="flex items-center gap-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
-                <CheckCircle2 size={18} className="text-purple-500" /> {skill}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+        <Reveal direction="up" delay={0.1}>
+          <motion.div 
+            whileHover={{ y: -10 }}
+            className="p-10 rounded-[2rem] glass border border-white/5 hover:border-purple-500/50 hover:shadow-[0_0_50px_-15px_rgba(168,85,247,0.3)] transition-all group"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+              <Code className="text-purple-400 group-hover:text-purple-300 transition-colors" size={32} />
+            </div>
+            <h4 className="text-2xl font-bold mb-6 group-hover:text-purple-100 transition-colors">Tools & Tech</h4>
+            <ul className="space-y-4">
+              {SKILLS.tools.map(skill => (
+                <li key={skill} className="flex items-center gap-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                  <CheckCircle2 size={18} className="text-purple-500" /> {skill}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </Reveal>
 
-        <motion.div 
-          whileHover={{ y: -10 }}
-          className="p-10 rounded-[2rem] glass border border-white/5 hover:border-pink-500/50 hover:shadow-[0_0_50px_-15px_rgba(236,72,153,0.3)] transition-all group"
-        >
-          <div className="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all">
-            <Sparkles className="text-pink-400 group-hover:text-pink-300 transition-colors" size={32} />
-          </div>
-          <h4 className="text-2xl font-bold mb-6 group-hover:text-pink-100 transition-colors">AI Workflow</h4>
-          <ul className="space-y-4">
-            {SKILLS.ai.map(skill => (
-              <li key={skill} className="flex items-center gap-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
-                <CheckCircle2 size={18} className="text-pink-500" /> {skill}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+        <Reveal direction="up" delay={0.2}>
+          <motion.div 
+            whileHover={{ y: -10 }}
+            className="p-10 rounded-[2rem] glass border border-white/5 hover:border-pink-500/50 hover:shadow-[0_0_50px_-15px_rgba(236,72,153,0.3)] transition-all group"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all">
+              <Sparkles className="text-pink-400 group-hover:text-pink-300 transition-colors" size={32} />
+            </div>
+            <h4 className="text-2xl font-bold mb-6 group-hover:text-pink-100 transition-colors">AI Workflow</h4>
+            <ul className="space-y-4">
+              {SKILLS.ai.map(skill => (
+                <li key={skill} className="flex items-center gap-3 text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                  <CheckCircle2 size={18} className="text-pink-500" /> {skill}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </Reveal>
       </div>
     </div>
   </section>
@@ -494,6 +533,10 @@ const Work = () => (
         {/* Project 1 - Large Bento */}
         <motion.a 
           href={PROJECTS[0].link}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           whileHover={{ y: -5 }}
           className="md:col-span-2 md:row-span-2 group relative rounded-[2.5rem] overflow-hidden glass border border-white/5"
         >
@@ -517,13 +560,18 @@ const Work = () => (
         {/* Project 2 - Small Bento */}
         <motion.a 
           href={PROJECTS[1].link}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.05 }}
           whileHover={{ y: -5 }}
           className="md:col-span-1 md:row-span-1 group relative rounded-[2.5rem] overflow-hidden glass border border-white/5"
         >
           <img 
             src={PROJECTS[1].image} 
             alt={PROJECTS[1].title} 
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-[1.2] transition-transform duration-700"
+            style={{ objectPosition: '25% 42%' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity" />
           <div className="absolute bottom-0 left-0 p-8 w-full flex justify-between items-end">
@@ -540,6 +588,10 @@ const Work = () => (
         {/* Project 3 - Small Bento */}
         <motion.a 
           href={PROJECTS[2].link}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           whileHover={{ y: -5 }}
           className="md:col-span-1 md:row-span-1 group relative rounded-[2.5rem] overflow-hidden glass border border-white/5"
         >
@@ -562,6 +614,10 @@ const Work = () => (
 
         {/* Project 4 - Tall Bento (Video Embed) */}
         <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
           whileHover={{ y: -5 }}
           className="md:col-span-1 md:row-span-2 group relative rounded-[2.5rem] overflow-hidden glass border border-white/5"
         >
@@ -604,6 +660,10 @@ const Work = () => (
         {/* Project 5 - Wide Bento */}
         <motion.a 
           href={PROJECTS[5].link}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           whileHover={{ y: -5 }}
           className="md:col-span-2 md:row-span-1 group relative rounded-[2.5rem] overflow-hidden glass border border-white/5"
         >
@@ -627,6 +687,10 @@ const Work = () => (
         {/* Project 6 - Wide Bento */}
         <motion.a 
           href={PROJECTS[3].link}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.25 }}
           whileHover={{ y: -5 }}
           className="md:col-span-2 md:row-span-1 group relative rounded-[2.5rem] overflow-hidden glass border border-white/5"
         >
@@ -659,18 +723,20 @@ const Experience = () => {
     <section id="experience" className="section-padding">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-16">
-          <div className="lg:col-span-4">
-            <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Career</h2>
-            <h3 className="text-4xl font-display font-bold mb-8">Professional Journey</h3>
-            <p className="text-zinc-500 text-lg leading-relaxed mb-8">
-              Over 7 years of evolving through roles that demanded creative excellence and strategic thinking.
-            </p>
-            <div className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
-              <h4 className="font-bold mb-2">Education</h4>
-              <p className="text-sm text-zinc-300">B.Tech in CSE</p>
-              <p className="text-xs text-zinc-500">Dr. A.P.J. Abdul Kalam Technical University · 2016</p>
+          <Reveal direction="left" className="lg:col-span-4">
+            <div>
+              <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Career</h2>
+              <h3 className="text-4xl font-display font-bold mb-8">Professional Journey</h3>
+              <p className="text-zinc-500 text-lg leading-relaxed mb-8">
+                Over 7 years of evolving through roles that demanded creative excellence and strategic thinking.
+              </p>
+              <div className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                <h4 className="font-bold mb-2">Education</h4>
+                <p className="text-sm text-zinc-300">B.Tech in CSE</p>
+                <p className="text-xs text-zinc-500">Dr. A.P.J. Abdul Kalam Technical University · 2016</p>
+              </div>
             </div>
-          </div>
+          </Reveal>
           
           <div className="lg:col-span-8">
             <div className="space-y-12">
@@ -726,14 +792,16 @@ const AIWorkflow = () => (
   <section id="ai-workflow" className="section-padding bg-indigo-600/5 relative overflow-hidden">
     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
     <div className="max-w-7xl mx-auto relative z-10">
-      <div className="text-center max-w-3xl mx-auto mb-20">
-        <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Modern Workflow</h2>
-        <h3 className="text-4xl md:text-5xl font-display font-bold mb-6">AI-Augmented Design</h3>
-        <p className="text-zinc-400 text-lg">
-          I don't fear AI; I master it. Here is how I integrate artificial intelligence 
-          to deliver superior design value at scale.
-        </p>
-      </div>
+      <Reveal direction="fade">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Modern Workflow</h2>
+          <h3 className="text-4xl md:text-5xl font-display font-bold mb-6">AI-Augmented Design</h3>
+          <p className="text-zinc-400 text-lg">
+            I don't fear AI; I master it. Here is how I integrate artificial intelligence 
+            to deliver superior design value at scale.
+          </p>
+        </div>
+      </Reveal>
 
       <div className="relative">
         {/* Pipeline Line - Desktop */}
@@ -812,33 +880,36 @@ const Contact = () => {
           <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]" />
           
           <div className="grid lg:grid-cols-2 gap-16 relative z-10">
-            <div>
-              <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tighter">
-                Let's build the <span className="text-gradient">future</span> together.
-              </h2>
-              <p className="text-zinc-400 text-xl mb-12 max-w-md">
-                Whether you have a project in mind or just want to say hi, I'd love to hear from you.
-              </p>
-              
-              <div className="space-y-6">
-                <a href="mailto:juhiafreen45@gmail.com" className="flex items-center gap-4 text-2xl font-medium hover:text-indigo-400 transition-colors">
-                  <Mail className="text-indigo-500" /> juhiafreen45@gmail.com
-                </a>
-                <div className="flex gap-6 pt-8">
-                  <a href="https://www.linkedin.com/in/juhiafreen/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <Linkedin size={20} />
+            <Reveal direction="left">
+              <div>
+                <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tighter">
+                  Let's build the <span className="text-gradient">future</span> together.
+                </h2>
+                <p className="text-zinc-400 text-xl mb-12 max-w-md">
+                  Whether you have a project in mind or just want to say hi, I'd love to hear from you.
+                </p>
+                
+                <div className="space-y-6">
+                  <a href="mailto:juhiafreen45@gmail.com" className="flex items-center gap-4 text-2xl font-medium hover:text-indigo-400 transition-colors">
+                    <Mail className="text-indigo-500" /> juhiafreen45@gmail.com
                   </a>
-                  <a href="https://github.com/Juhi-Afreen" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <Github size={20} />
-                  </a>
-                  <a href="https://www.instagram.com/sassy_artworks" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <Instagram size={20} />
-                  </a>
+                  <div className="flex gap-6 pt-8">
+                    <a href="https://www.linkedin.com/in/juhiafreen/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                      <Linkedin size={20} />
+                    </a>
+                    <a href="https://github.com/Juhi-Afreen" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                      <Github size={20} />
+                    </a>
+                    <a href="https://www.instagram.com/sassy_artworks" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                      <Instagram size={20} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <Reveal direction="right">
+              <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Name</label>
@@ -892,16 +963,15 @@ const Contact = () => {
                 </p>
               )}
             </form>
+            </Reveal>
           </div>
         </div>
         
-        <footer className="mt-24 flex flex-col md:flex-row justify-between items-center gap-6 text-zinc-600 text-sm border-t border-white/5 pt-12">
+        <Reveal direction="fade" delay={0.3}>
+          <footer className="mt-24 flex justify-center text-zinc-600 text-sm border-t border-white/5 pt-12">
           <p>© {new Date().getFullYear()} Juhi Afreen. All rights reserved.</p>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-          </div>
         </footer>
+        </Reveal>
       </div>
     </section>
   );
