@@ -244,7 +244,7 @@ const Navbar = () => {
         <a href="#" className="text-xl font-medium font-display tracking-tight flex items-center gap-3">
           <img 
             src="https://raw.githubusercontent.com/Juhi-Afreen/Juhi-Portfolio/refs/heads/main/src/assets/logo-circle.png" 
-            alt="Logo" 
+            alt="Juhi Afreen Logo" 
             className="w-14 h-14 object-contain"
           />
           <span>Juhi Afreen</span>
@@ -353,7 +353,7 @@ const Hero = () => (
         <div className="aspect-square rounded-3xl overflow-hidden border border-white/10 relative group">
           <img 
             src="https://raw.githubusercontent.com/Juhi-Afreen/Juhi-Portfolio/main/src/assets/juhi-afreen-dp.jpg" 
-            alt="Juhi Afreen" 
+            alt="Juhi Afreen Profile Portrait" 
             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60" />
@@ -454,7 +454,7 @@ const Skills = () => (
     <div className="max-w-7xl mx-auto">
       <Reveal direction="fade">
         <div className="text-center mb-20">
-          <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Expertise</h2>
+          <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Skills</h2>
           <h3 className="text-4xl md:text-5xl font-display font-bold">My Creative Arsenal</h3>
         </div>
       </Reveal>
@@ -525,7 +525,7 @@ const Work = () => (
   <section id="work" className="section-padding bg-zinc-900/30">
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-20">
-        <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Portfolio</h2>
+        <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Projects</h2>
         <h3 className="text-4xl md:text-5xl font-display font-bold">Selected Works</h3>
       </div>
 
@@ -542,7 +542,7 @@ const Work = () => (
         >
           <img 
             src={PROJECTS[0].image} 
-            alt={PROJECTS[0].title} 
+            alt={`${PROJECTS[0].title} - ${PROJECTS[0].category} preview`} 
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
@@ -569,7 +569,7 @@ const Work = () => (
         >
           <img 
             src={PROJECTS[1].image} 
-            alt={PROJECTS[1].title} 
+            alt={`${PROJECTS[1].title} - ${PROJECTS[1].category} preview`} 
             className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-[1.2] transition-transform duration-700"
             style={{ objectPosition: '25% 42%' }}
           />
@@ -597,7 +597,7 @@ const Work = () => (
         >
           <img 
             src={PROJECTS[2].image} 
-            alt={PROJECTS[2].title} 
+            alt={`${PROJECTS[2].title} - ${PROJECTS[2].category} preview`} 
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity" />
@@ -634,7 +634,7 @@ const Work = () => (
           ) : (
             <img 
               src={PROJECTS[4].image} 
-              alt={PROJECTS[4].title} 
+              alt={`${PROJECTS[4].title} - ${PROJECTS[4].category} preview`} 
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
           )}
@@ -669,7 +669,7 @@ const Work = () => (
         >
           <img 
             src={PROJECTS[5].image} 
-            alt={PROJECTS[5].title} 
+            alt={`${PROJECTS[5].title} - ${PROJECTS[5].category} preview`} 
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity" />
@@ -696,7 +696,7 @@ const Work = () => (
         >
           <img 
             src={PROJECTS[3].image} 
-            alt={PROJECTS[3].title} 
+            alt={`${PROJECTS[3].title} - ${PROJECTS[3].category} preview`} 
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity" />
@@ -725,7 +725,7 @@ const Experience = () => {
         <div className="grid lg:grid-cols-12 gap-16">
           <Reveal direction="left" className="lg:col-span-4">
             <div>
-              <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Career</h2>
+              <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Work Experience</h2>
               <h3 className="text-4xl font-display font-bold mb-8">Professional Journey</h3>
               <p className="text-zinc-500 text-lg leading-relaxed mb-8">
                 Over 7 years of evolving through roles that demanded creative excellence and strategic thinking.
@@ -882,9 +882,10 @@ const Contact = () => {
           <div className="grid lg:grid-cols-2 gap-16 relative z-10">
             <Reveal direction="left">
               <div>
-                <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tighter">
+                <h2 className="text-sm font-bold tracking-[0.2em] text-indigo-500 uppercase mb-4">Contact</h2>
+                <h3 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tighter">
                   Let's build the <span className="text-gradient">future</span> together.
-                </h2>
+                </h3>
                 <p className="text-zinc-400 text-xl mb-12 max-w-md">
                   Whether you have a project in mind or just want to say hi, I'd love to hear from you.
                 </p>
